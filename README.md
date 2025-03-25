@@ -1,2 +1,2 @@
 # Getting_started_with_power_apps_and_snowflake
-PowerApps VHOL with new connector
+PowerApps and PowerAutomate VHOL with new connector
