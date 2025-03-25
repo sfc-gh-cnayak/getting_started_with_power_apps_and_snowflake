@@ -27,8 +27,9 @@ Snowflake is a cloud-based data platform that allows organizations to store, pro
 
 ### What You’ll Need 
 - A free [Snowflake Account](https://signup.snowflake.com/?utm_cta=quickstarts_)
-- A Power Apps account [PowerApps](https://learn.microsoft.com/en-us/power-apps/powerapps-overview)
-- You must have a premium Power Apps license
+- A Power Apps account [PowerApps](https://www.microsoft.com/en-us/power-platform/products/power-apps/)
+- You must have a premium Power Apps license 
+- Use your existing Company Entra ID, or [sign-up](https://signup.microsoft.com/get-started/signup?products=FAF849AB-BD30-42B2-856C-8F1EDC230CE9)  
 
 
 ### What You’ll Build 
@@ -75,7 +76,7 @@ GRANT ALL ON SCHEMA  hol_db.public TO ROLE ANALYST;
 
 ```
 
-### Get Sample data and scripts from Azure Blob -> Shankar, Nithin  
+### Get Sample data and scripts 
 1. Download the data for the demo [sample data file](assets/customer_segmentation_data.csv) 
 2. Login to Snowflake Account and go to Data -> Databases -> HOL_DB
 3. Select table CUSTOMER_PRESEGMENT and click Load Data 
@@ -101,22 +102,27 @@ Duration: 15
 
 After you have configured PowerApps Connector to Snowflake, go to Power Apps 
 1. Click Tables -> Create Virtual Table 
-
 	![virtualtable](assets/Virtual_Table_Create.png)
 
 2. Select Connection that you have setup in prior step, click NEXT
-
 	![connection](assets/connection.jpg)
-3. You should now see the table CUSTOMER_PRESEGMENT, click NEXT
-4. On Configuration screen, click Next and click FINISH on the last screen.
-5. Now, you see that age is negative for ID1 and ID2, click the pencil to make changes and save.
 
+3. You should now see the table CUSTOMER_PRESEGMENT, click NEXT
+
+4. On Configuration screen, click Next and click FINISH on the last screen.
+
+5. Now, you see that age is negative for ID1 and ID2, click the pencil to make changes and save.
 ![crud](assets/CRUD_Change.png)
+
 6. Click Apps, click [Start with a page design]
+
 7. Select a dataverse table, and search CUSTOMER_PRESEGMENT and click Create App
+
 8. Save the app as Marketing Segments.  
+
 9. Click the Play button.
 	![app](assets/App_Save.png)
+	
 10. As a marketer you notice the customers aren't segmented as there is no segment field. 
 
 <!-- ------------------------ -->
@@ -125,7 +131,9 @@ After you have configured PowerApps Connector to Snowflake, go to Power Apps
 ### Lets look at the clustering Model and deploy it 
 Typically your datascience teams trains and deploy the ML models, and you can invoke them. 
 1. Download the Customer Segmentation Notebook [Jupyter ipynb](assets/customer_segmentation.ipynb) 
+
 2. Connect to Snowflake: Projects -> Notebook
+
 3. Import the notebook you downloaded earlier by clicking import .ipynb file
 	![notebook](assets/ImportNotebook.jpg)
 
@@ -134,6 +142,7 @@ Typically your datascience teams trains and deploy the ML models, and you can in
 	![packages](assets/Packages.png)
 
 5. Click the RunALL button or click START and execute individual cell. 
+
 6. Create a Procedure to Invoke Model Predictions by running below SQL in a worksheet 
 	[storedproc](assets/segment_storedproc.sql)
 
@@ -141,10 +150,14 @@ Typically your datascience teams trains and deploy the ML models, and you can in
 ### Build a PowerAutomate Flow
 Let's build a PowerAutomate Flow to call stored procedure you created and run the model.
 1. Launch PowerAutomate
+
 2. Click My flows -> + New Flow  -> Instant Cloud Flow
+
 3. Give a name Call_Segmentize and select "When Power Apps calls a flow (V2)" for Choose how to trigger this flow 
    ![flowcreate](assets/flow_create.png)
-3. In the canvas -> click New step 
+
+4. In the canvas -> click New step 
+
 5. Search "Snowflake" and select "Submit SQL Statement for Execution" as shown 
 	![flow](assets/power_apps_choose_operation.png) 
 6. Let's add the following parameters 
@@ -156,23 +169,26 @@ Let's build a PowerAutomate Flow to call stored procedure you created and run th
 	- role  - ANALYST
 	
 	Make sure to set connection to the one you created [above](#set-up-azure-ad-entra-id-authentication-for-snowflake) 	
-
 	![automateconnect](assets/automate_conn.png)
+
 7. Run the flow and ensure it completes successfully. 
 		
 		
 ### Update PowerApp to invoke your Flow 
 1. Put a button called Segmentize in the CUSTOMER_PRESEGMENT screen.
 	![add_trigger](assets/app_call_flow.png)
+
 2. Click Tables -> Create Virtual Tables and select CUSTOMER_SEGMENTS 
 	![connection](assets/connection.jpg)
+
 3. Let's create another screen (name: Trigger_Success) to indicate when the flow is completed. 
+
 4. You can choose "Header and Table" or "Blank: for the screen type, we will connect new view named CUSTOMER_SEGMENTS which has the PREDICTION field. 
 	![show_segments] (assets/segment_show.png) (*** You may see data because you tested the flow ***)
-4. Go back the CUSTOMER_PRESEGMENT screen, click the segmentize button and in the Properties->Advanced table 
+5. Go back the CUSTOMER_PRESEGMENT screen, click the segmentize button and in the Properties->Advanced table 
    pick ONSELECT action and enter (Call_Segmentize.Run(); Navigate(Trigger_Success))
    ![flow_trigger](assets/run_powerflow.png)
-5. Now you can see PREDICTION column in the CUSTOMER_SEGMENTS view displayed. 
+6. Now you can see PREDICTION column in the CUSTOMER_SEGMENTS view displayed. 
    ![show_prediction](assets/segment_prediction.png)
 
 ### Reset the Demo 
