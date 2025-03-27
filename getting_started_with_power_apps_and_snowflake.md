@@ -77,7 +77,7 @@ GRANT ALL ON SCHEMA  hol_db.public TO ROLE ANALYST;
 ```
 
 ### Get Sample data and scripts 
-1. Download the data for the demo [sample data file](assets/customer_segmentation_data.csv) 
+1. Download the data for the demo [sample data file](scripts/customer_segmentation_data.csv) 
 2. Login to Snowflake Account and go to Data -> Databases -> HOL_DB
 3. Select table CUSTOMER_PRESEGMENT and click Load Data 
 ![load data](assets/load_db.png)
@@ -94,7 +94,11 @@ Now we need to set up an app registration for Active Directory (Entra ID) OAuth,
 For the purposes of this demo, we will create a  **MAKE SURE YOU FOLLOW SERVICE PRINCIPAL AUTH** Authentication and the steps are provided
 in the document below. 
 
-https://learn.microsoft.com/en-us/connectors/snowflakev2/#supported-capabilities-for-power-apps
+https://learn.microsoft.com/en-us/connectors/snowflakev2/#supported-capabilities-for-power-apps or 
+you can download and run the automation scripts in Azure CLI as an admin 
+
+[Script-for-Windows Users](/scripts/AppCreationAndConfigLatest_win.ps1) | 
+[Script-for-Mac Users](/scripts/AppCreationAndConfigLatest_Mac.ps1)
 
 <!-- ------------------------ -->
 ### Build a PowerApp and connect to Snowflake data
@@ -130,7 +134,7 @@ After you have configured PowerApps Connector to Snowflake, go to Power Apps
 ## Snowflake Segmentation ML Model  
 ### Lets look at the clustering Model and deploy it 
 Typically your datascience teams trains and deploy the ML models, and you can invoke them. 
-1. Download the Customer Segmentation Notebook [Jupyter ipynb](assets/customer_segmentation.ipynb) 
+1. Download the Customer Segmentation Notebook [Jupyter ipynb](scripts/customer_segmentation.ipynb) 
 
 2. Connect to Snowflake: Projects -> Notebook
 
@@ -144,7 +148,7 @@ Typically your datascience teams trains and deploy the ML models, and you can in
 5. Click the RunALL button or click START and execute individual cell. 
 
 6. Create a Procedure to Invoke Model Predictions by running below SQL in a worksheet 
-	[storedproc](assets/segment_storedproc.sql)
+	[storedproc](scripts/segment_storedproc.sql)
 
 
 ### Build a PowerAutomate Flow
