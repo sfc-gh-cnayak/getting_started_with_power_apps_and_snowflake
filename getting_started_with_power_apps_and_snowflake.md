@@ -188,7 +188,8 @@ Let's build a PowerAutomate Flow to call stored procedure you created and run th
 3. Let's create another screen (name: Trigger_Success) to indicate when the flow is completed. 
 
 4. You can choose "Header and Table" or "Blank: for the screen type, we will connect new view named CUSTOMER_SEGMENTS which has the PREDICTION field. 
-	![show_segments] (assets/segment_show.png) (*** You may see data because you tested the flow ***)
+![show_segment](assets/segment_show.png)
+(*** You may see data because you tested the flow ***)
 5. Go back the CUSTOMER_PRESEGMENT screen, click the segmentize button and in the Properties->Advanced table 
    pick ONSELECT action and enter (Call_Segmentize.Run(); Navigate(Trigger_Success))
    ![flow_trigger](assets/run_powerflow.png)
